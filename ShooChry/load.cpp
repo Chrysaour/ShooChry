@@ -14,6 +14,11 @@ void load() {
 
 	img_back[0] = LoadGraph("dat/img/back/0/back0.png");
 
+	img_eff_bom[0] = LoadGraph("dat/img/effect/bom0.png");
+	img_eff_bom[1] = LoadGraph("dat/img/effect/bom1.png");
+	img_eff_bom[2] = LoadGraph("dat/img/char/body.png");
+	img_eff_bom[3] = LoadGraph("dat/img/bullet/bom_title0.png");
+
 	//弾画像のファイルを読み込む
 	LoadDivGraph("dat/img/bullet/b0.png", 5, 5, 1, 76, 76, img_bullet[0]);
 	LoadDivGraph("dat/img/bullet/b1.png", 6, 6, 1, 22, 22, img_bullet[1]);
@@ -31,15 +36,16 @@ void load() {
 	sound_se[0] = LoadSoundMem("dat/se/enemy_shot.wav");
 	sound_se[1] = LoadSoundMem("dat/se/enemy_death.wav");
 	sound_se[2] = LoadSoundMem("dat/se/cshot.wav");
-	sound_se[3] = LoadSoundMem("../dat/se/char_death.wav");//自機死に音
+	sound_se[3] = LoadSoundMem("dat/se/char_death.wav");//自機死に音
 	sound_se[8] = LoadSoundMem("dat/se/hit.wav");
+	sound_se[14] = LoadSoundMem("dat/se/bom0.wav");
+	sound_se[15] = LoadSoundMem("dat/se/bom1.wav");
 	
 	ChangeVolumeSoundMem(50, sound_se[0]);//各素材の再生ボリュームを設定
 	ChangeVolumeSoundMem(128, sound_se[1]);
 	ChangeVolumeSoundMem(80, sound_se[3]);
 	ChangeVolumeSoundMem(128, sound_se[2]);
 	ChangeVolumeSoundMem(80, sound_se[8]);
-
 }
 
 //敵の出現情報をエクセルから読み込んで格納する関数

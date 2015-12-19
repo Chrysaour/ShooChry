@@ -94,6 +94,22 @@ void enemy_death_judge(int s) {
 	}
 }
 
+//sの敵にpower食らわす
+void hit_enemy(int s, int power) {
+	enemy[s].hp -= power;//弾の持つパワー分HPを減らす
+	enemy_death_judge(s);//敵が死ぬかどうかを決める
+}
+
+//ボムと敵の処理
+void cbom_and_enemy() {
+	int s;
+	if (bom.flag != 1)return;
+	for (s = 0;s<ENEMY_MAX;s++) {//敵総数
+		if (enemy[s].flag>0)
+			hit_enemy(s, ch.power / 20);//sの敵にch.power/20ほど喰らわす
+	}
+}
+
 //自機ショットと敵との処理
 void cshot_and_enemy() {
 	int i, s;
@@ -103,8 +119,7 @@ void cshot_and_enemy() {
 				if (enemy[s].flag>0) {
 					if (out_judge_cshot(i, s)) {//自機ショットと敵が当たっていれば
 						cshot[i].flag = 0;//その自機ショットを消す
-						enemy[s].hp -= cshot[i].power;//弾の持つパワー分HPを減らす
-						enemy_death_judge(s);//敵が死ぬかどうかを決める
+						hit_enemy(s, cshot[i].power);//sの敵に.powerだけ喰らわす
 					}
 				}
 			}
@@ -139,6 +154,7 @@ void enemyshot_and_ch() {
 
 //当たり判定メイン
 void out_main() {
+	cbom_and_enemy();
 	cshot_and_enemy();
 	enemyshot_and_ch();
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-
 //キャラクターショットに関する構造体
 typedef struct {
 	int flag, power, cnt, knd;//フラグ、パワー、カウンタ、種類
@@ -72,8 +71,8 @@ typedef struct {
 
 //エフェクト
 typedef struct {
-	int flag, cnt, col, knd, img, eff, brt;
-	double x, y, r, ang;
+	int flag, cnt, col, knd, img, eff;
+	double x, y, r, ang, spd, mvang, brt;
 }effect_t;
 
 //消滅エフェクト
@@ -88,3 +87,19 @@ typedef struct {
 	double range;
 }bullet_info_t;
 
+//ボムの情報
+typedef struct {
+	int flag, cnt, knd;
+	double x, y;
+}bom_t;
+
+//画面の明るさ情報
+typedef struct {
+	unsigned char brt;
+}bright_set_t;
+
+//ドン！と揺れる画面の情報
+typedef struct {
+	int flag, cnt, time, size;
+	int x, y;
+}dn_t;

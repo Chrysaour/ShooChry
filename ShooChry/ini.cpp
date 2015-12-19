@@ -44,5 +44,11 @@ void ini() {
 	ch.power = 500;
 	memset(effect, 0, sizeof(effect_t)*EFFECT_MAX);
 	memset(del_effect, 0, sizeof(del_effect_t)*DEL_EFFECT_MAX);
+
+	memset(&bom, 0, sizeof(bom_t));
+	memset(&bright_set, 0, sizeof(bright_set_t));
+	memset(&dn, 0, sizeof(dn_t));
+
+	bright_set.brt = 255;
 }
 

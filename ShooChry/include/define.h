@@ -24,15 +24,13 @@
 #define SHOT_MAX 30
 
 //ショットの種類の最大数
-#define SHOT_KND_MAX 1
+#define SHOT_KND_MAX 18
 
 //効果音の種類の最大数
 #define SE_MAX 100
 
 //敵の行動パターンの最大数
 #define ENEMY_PATTERN_MAX 11
-
-#define SHOT_KND_MAX 18
 
 //自機ショットの登録最大数
 #define CSHOT_MAX 200

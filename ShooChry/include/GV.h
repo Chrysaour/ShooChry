@@ -47,3 +47,8 @@ GLOBAL int img_back[10];//背景用画像
 GLOBAL int count;
 
 GLOBAL bullet_info_t bullet_info[10];//弾情報
+
+GLOBAL int img_eff_bom[5];      //ボムのエフェクト画像
+GLOBAL bom_t bom;               //ボム
+GLOBAL bright_set_t bright_set; //描画の輝度
+GLOBAL dn_t dn;                 //ドンと揺れる

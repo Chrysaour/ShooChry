@@ -56,15 +56,15 @@ void graph_cshot() {
 	}
 }
 
-void graph_effect() {
+void graph_effect(int knd) {
 	for (int i = 0;i<EFFECT_MAX;i++) {
-		if (effect[i].flag>0) {
+		if (effect[i].flag>0 && effect[i].knd == knd) {
 			if (effect[i].eff == 1)//エフェクトが光エフェクトなら
 				SetDrawBlendMode(DX_BLENDMODE_ADD, effect[i].brt);
-
-			DrawRotaGraphF(effect[i].x + FIELD_X, effect[i].y + FIELD_Y, effect[i].r, effect[i].ang, effect[i].img, TRUE);
-
-			if (effect[i].eff == 1)
+			if (effect[i].eff == 2)//エフェクトがαエフェクトなら
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, effect[i].brt);
+			DrawRotaGraphF(effect[i].x + FIELD_X + dn.x, effect[i].y + FIELD_Y + dn.y, effect[i].r, effect[i].ang, effect[i].img, TRUE);
+			if (effect[i].eff == 1 || effect[i].eff == 2)
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 	}
@@ -73,11 +73,26 @@ void graph_effect() {
 extern void graph_back_main();
 
 void graph_main() {
-	graph_back_main();
-	graph_effect();
-	graph_enemy();
-	graph_cshot();
-	graph_ch();
-	graph_bullet();
-	graph_board();
+	if (bright_set.brt != 255)SetDrawBright(bright_set.brt, bright_set.brt, bright_set.brt);
+
+	graph_back_main();//背景描画メイン
+	graph_effect(0);//敵が死ぬエフェクト
+	graph_enemy();//敵の描画
+	graph_cshot();//自機ショットの描画
+
+	if (bright_set.brt != 255)SetDrawBright(255, 255, 255);
+
+	graph_ch();//自機の描画
+
+	if (bright_set.brt != 255)SetDrawBright(bright_set.brt, bright_set.brt, bright_set.brt);
+
+	graph_bullet();//弾の描画
+
+	if (bright_set.brt != 255)SetDrawBright(255, 255, 255);
+
+	graph_effect(1);//ボムのエフェクト
+	graph_effect(2);//ボム線のエフェクト
+	graph_effect(3);//ボムキャラのエフェクト
+	graph_board();//ボードの描画
 }
+
