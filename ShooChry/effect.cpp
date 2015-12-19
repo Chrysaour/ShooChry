@@ -13,6 +13,8 @@ int search_effect() {
 void calc_effect() {
 	for (int i = 0;i<EFFECT_MAX;i++) {
 		if (effect[i].flag>0) {//エフェクトが登録されていたら
+			effect[i].x += cos(effect[i].mvang)*effect[i].spd;
+			effect[i].y += sin(effect[i].mvang)*effect[i].spd;
 			switch (effect[i].knd) {//エフェクトの種類によって分岐
 			case 0://敵の消滅エフェクト
 				effect[i].cnt++;
@@ -23,10 +25,7 @@ void calc_effect() {
 					effect[i].flag = 0;//消す
 				break;
 			case 1://ボムのエフェクト
-				   //座標計算
-				effect[i].x += cos(effect[i].mvang)*effect[i].spd;
-				effect[i].y += sin(effect[i].mvang)*effect[i].spd;
-				//スピード計算
+				   //スピード計算
 				if (effect[i].cnt<60)
 					effect[i].spd -= (0.2 + effect[i].cnt*effect[i].cnt / 3000.0);
 				if (effect[i].cnt == 60) {
@@ -51,10 +50,7 @@ void calc_effect() {
 					effect[i].flag = 0;
 				break;
 			case 2://ボムエフェクト（キャラ）
-				   //座標計算
-				effect[i].x += cos(effect[i].mvang)*effect[i].spd;
-				effect[i].y += sin(effect[i].mvang)*effect[i].spd;
-				//明るさ計算
+				   //明るさ計算
 				if (effect[i].cnt<51)
 					effect[i].brt += 4;
 				if (effect[i].cnt>130 - 51)
@@ -65,10 +61,7 @@ void calc_effect() {
 					effect[i].flag = 0;
 				break;
 			case 3://ボムのエフェクト（ライン）
-				   //座標計算
-				effect[i].x += cos(effect[i].mvang)*effect[i].spd;
-				effect[i].y += sin(effect[i].mvang)*effect[i].spd;
-				//明るさ計算
+				   //明るさ計算
 				if (effect[i].cnt<51)
 					effect[i].brt += 2;
 				if (effect[i].cnt>130 - 51)
@@ -78,6 +71,15 @@ void calc_effect() {
 				if (effect[i].cnt >= 130)
 					effect[i].flag = 0;
 				break;
+			case 4://喰らいボムエフェクト
+				   //明るさ計算
+				if (effect[i].cnt >= 6)
+					effect[i].brt -= 255 / 6;
+				effect[i].r += 0.12;
+				effect[i].cnt++;
+				if (effect[i].cnt >= 12 || ch.flag != 1)
+					effect[i].flag = 0;
+				break;
 			default:
 				printfDx("effect設定エラー\n");
 				break;
@@ -85,6 +87,7 @@ void calc_effect() {
 		}
 	}
 }
+
 
 //消滅エフェクトの登録空き番号を探す
 int search_del_effect() {
@@ -193,7 +196,7 @@ void enter_bom() {
 //ボム計算
 void bom_calc() {
 	int n, k, shot_angle[4] = { 0,PI,PI / 2,PI*1.5 };//4発エフェクトが飛ぶ角度
-	if (ch.flag == 0 && bom.flag == 0) {//キャラが通常状態で、ボムがオフなら
+	if ((ch.flag == 0 || ch.flag == 1) && bom.flag == 0) {//キャラが通常か喰らいボム状態で、ボムがオフなら
 		if (CheckStatePad(configpad.bom) == 1) {//ボムボタンが押されたら
 			enter_bom();
 		}
@@ -228,6 +231,27 @@ void bom_calc() {
 	}
 }
 
+void enter_crybom_effect() {
+	int k;
+	if (ch.flag == 1) {
+		if (ch.cnt % 2 == 0) {
+			if ((k = search_effect()) != -1) {
+				effect[k].flag = 1;
+				effect[k].cnt = 0;
+				effect[k].knd = 4;//喰らいボムエフェクト
+				effect[k].brt = 255;
+				effect[k].ang = rang(PI);
+				effect[k].spd = 0;
+				effect[k].r = 0;
+				effect[k].eff = 2;
+				effect[k].img = img_del_effect[GetRand(4)];
+				effect[k].x = ch.x;
+				effect[k].y = ch.y;
+			}
+		}
+	}
+}
+
 //ドガーンとゆれる画面の処理
 void dn_calc() {
 	if (dn.flag == 1) {
@@ -247,4 +271,5 @@ void effect_main() {
 	calc_del_effect();//消滅エフェクトの計算
 	calc_effect();//エフェクトの計算
 	bom_calc();//ボム計算
+	enter_crybom_effect();
 }

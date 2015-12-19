@@ -45,3 +45,6 @@ GLOBAL void out_main();
 
 //effect.cpp
 GLOBAL void effect_main();
+
+//boss_shot.cpp
+GLOBAL void boss_shot_main();

@@ -26,6 +26,7 @@ int enemy_num_search() {
 //“Gî•ñ‚ğ“o˜^
 void enemy_enter() {//“G‚Ìs“®‚ğ“o˜^E§Œä‚·‚éŠÖ”
 	int i, j, t;
+	if (boss.flag != 0)return;
 	for (t = 0;t<ENEMY_ORDER_MAX;t++) {
 		if (enemy_order[t].cnt == stage_count) {//Œ»İ‚ÌuŠÔ‚ªƒI[ƒ_[‚ÌuŠÔ‚È‚ç
 			if ((i = enemy_num_search()) != -1) {

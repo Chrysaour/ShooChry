@@ -33,10 +33,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			cshot_main();//自機ショットメイン
 			enemy_main();//敵処理メイン
 			shot_main();//ショットメイン
+			boss_shot_main();
 			out_main();  //当たり計算
 			effect_main();//エフェクトメイン
 			graph_main();//描画メイン
-			stage_count++;
+			if (boss.flag == 0)
+				stage_count++;
 			break;
 		default:
 			printfDx("不明なfunc_state\n");

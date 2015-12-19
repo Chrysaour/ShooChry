@@ -25,6 +25,12 @@
     <Filter Include="Source Files\shot\Hard">
       <UniqueIdentifier>{c45cd9bb-d99b-4100-80cb-0d1e4d979e7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\boss_shot">
+      <UniqueIdentifier>{bca0b850-8703-4930-8a8a-845564f9038d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\boss_shot\Hard">
+      <UniqueIdentifier>{3dbb24ae-42d6-404c-be4d-5d8307c74f3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">
@@ -72,6 +78,12 @@
     <ClCompile Include="graph_back.cpp">
       <Filter>Source Files\graph</Filter>
     </ClCompile>
+    <ClCompile Include="boss_shot.cpp">
+      <Filter>Source Files\boss_shot</Filter>
+    </ClCompile>
+    <ClCompile Include="boss_shotH.cpp">
+      <Filter>Source Files\boss_shot\Hard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\define.h">
@@ -84,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\func.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

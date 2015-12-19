@@ -103,3 +103,27 @@ typedef struct {
 	int flag, cnt, time, size;
 	int x, y;
 }dn_t;
+
+//ボスショットに関する構造体
+typedef struct {
+	//フラグ、種類、カウンタ、どの敵から発射されたかの番号、色
+	int flag, knd, cnt, num;
+	//ベース角度、ベーススピード
+	double base_angle[1], base_spd[1];
+	bullet_t bullet[BOSS_BULLET_MAX];
+}boss_shot_t;
+
+//物理的計算に使う構造体
+typedef struct {
+	int flag, cnt, set_t;
+	double ax, v0x, ay, v0y, vx, vy, prex, prey;
+}phy_t;
+
+//ボスの情報
+typedef struct {
+	int flag, cnt, knd, wtime, state, endtime, hagoromo, graph_flag;
+	int hp, hp_max;
+	int appear_count[2], set_hp[DANMAKU_MAX];
+	double x, y, ang, spd;
+	phy_t phy;
+}boss_t;

@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boss_shot.cpp" />
+    <ClCompile Include="boss_shotH.cpp" />
     <ClCompile Include="char.cpp" />
     <ClCompile Include="cshot.cpp" />
     <ClCompile Include="effect.cpp" />
@@ -170,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\define.h" />
+    <ClInclude Include="include\func.h" />
     <ClInclude Include="include\function.h" />
     <ClInclude Include="include\GV.h" />
     <ClInclude Include="include\struct.h" />

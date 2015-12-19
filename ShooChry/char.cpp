@@ -1,6 +1,14 @@
 #include "include/GV.h"
 
 void calc_ch() {
+	if (ch.flag == 1) {//喰らいボム受付中なら
+		bright_set.brt = 80;//暗く
+		if (ch.cnt>20) {//0.33秒喰らいボムを受け付ける
+			ch.flag = 2;    //1:喰らいボム受付中　2:死んで浮き上がり中
+			ch.cnt = 0;
+			bright_set.brt = 255;
+		}
+	}
 	if (ch.cnt == 0 && ch.flag == 2) {//今の瞬間死んだら
 		ch.x = FIELD_MAX_X / 2;//座標セット
 		ch.y = FIELD_MAX_Y + 30;
@@ -18,14 +26,12 @@ void calc_ch() {
 	}
 	if (ch.mutekicnt>0) {//無敵カウントが0じゃなければ
 		ch.mutekicnt++;
-		if (ch.mutekicnt>120)//２秒以上たったら
+		if (ch.mutekicnt>150)//150以上たったら
 			ch.mutekicnt = 0;//戻す
 	}
-
 	ch.cnt++;//キャラクタカウントアップ
 	ch.img = (ch.cnt % 24) / 6;//現在の画像決定
 }
-
 
 void ch_move() {//キャラクタの移動制御
 	int i, sayu_flag = 0, joge_flag = 0;
@@ -34,6 +40,8 @@ void ch_move() {//キャラクタの移動制御
 	int inputpad[4];
 	inputpad[0] = CheckStatePad(configpad.left); inputpad[1] = CheckStatePad(configpad.right);
 	inputpad[2] = CheckStatePad(configpad.down); inputpad[3] = CheckStatePad(configpad.up);
+
+	if (ch.flag == 1)return;//喰らいボム受付中は動かせない
 
 	if (CheckStatePad(configpad.left)>0)//左キーが押されていたら
 		ch.img += 4 * 2;//画像を左向きに

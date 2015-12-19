@@ -134,16 +134,12 @@ void enemyshot_and_ch() {
 		if (shot[s].flag>0) {//そのショットが登録されていたら
 			for (n = 0;n<SHOT_BULLET_MAX;n++) {//弾総数
 				if (shot[s].bullet[n].flag == 1) {//弾が登録されていたら
-					if (out_judge_enemyshot(s, n)) {//自機にその弾が接触していたら
+					if (out_judge_enemyshot(s, n) == 1) {//自機にその弾が接触していたら
 						shot[s].bullet[n].flag = 0;//弾をオフ
-
-												   /*喰らいボム処理をここに追加*/
-
-						if (ch.flag == 0 && ch.mutekicnt == 0) {//ステータスが通常で、無敵じゃなかったら
-							ch.flag = 2;    //1:喰らいボム受付中　2:死んで浮き上がり中
+						if (ch.flag == 0 && ch.mutekicnt == 0) {
 							ch.cnt = 0;
-							se_flag[3] = 1;//ピチュり音
-							return;
+							ch.flag = 1;
+							se_flag[3] = 1;
 						}
 					}
 				}
@@ -151,6 +147,7 @@ void enemyshot_and_ch() {
 		}
 	}
 }
+
 
 //当たり判定メイン
 void out_main() {

@@ -35,20 +35,22 @@ void first_ini() {
 void ini() {
 	stage_count = 1;
 	memset(&ch, 0, sizeof(ch_t));//自機データの初期化
-	ch.x = FIELD_MAX_X / 2;
-	ch.y = FIELD_MAX_Y * 3 / 4;
 	memset(enemy, 0, sizeof(enemy_t)*ENEMY_MAX);//敵データの初期化
 	memset(enemy_order, 0, sizeof(enemy_order_t)*ENEMY_ORDER_MAX);
 	memset(shot, 0, sizeof(shot_t)*SHOT_MAX);
 	memset(cshot, 0, sizeof(cshot_t)*CSHOT_MAX);
-	ch.power = 500;
 	memset(effect, 0, sizeof(effect_t)*EFFECT_MAX);
 	memset(del_effect, 0, sizeof(del_effect_t)*DEL_EFFECT_MAX);
-
 	memset(&bom, 0, sizeof(bom_t));
 	memset(&bright_set, 0, sizeof(bright_set_t));
 	memset(&dn, 0, sizeof(dn_t));
+	memset(&boss, 0, sizeof(boss_t));
 
+	ch.x = FIELD_MAX_X / 2;
+	ch.y = FIELD_MAX_Y * 3 / 4;
+	ch.power = 500;
+	boss.appear_count[0] = 100;
+	for (int i = 0;i<DANMAKU_MAX;i++)
+		boss.set_hp[i] = 5000;
 	bright_set.brt = 255;
 }
-

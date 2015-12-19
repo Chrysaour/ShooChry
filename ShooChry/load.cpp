@@ -31,6 +31,8 @@ void load() {
 	LoadDivGraph("dat/img/bullet/b8.png", 10, 10, 1, 12, 18, img_bullet[8]);
 	LoadDivGraph("dat/img/bullet/b9.png", 3, 3, 1, 13, 19, img_bullet[9]);
 	LoadDivGraph("dat/img/enemy/hit_effect.png", 5, 5, 1, 140, 140, img_del_effect);
+	LoadDivGraph("dat/img/char/riria.png", 8, 8, 1, 100, 100, img_dot_riria);
+
 
 	//“G‚ÌƒVƒ‡ƒbƒg‰¹‚ğ“Ç‚İ‚Ş
 	sound_se[0] = LoadSoundMem("dat/se/enemy_shot.wav");

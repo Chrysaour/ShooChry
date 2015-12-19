@@ -40,5 +40,13 @@
 //消滅エフェクト登録最大数
 #define DEL_EFFECT_MAX 30
 
+//ボスの定位置
+#define BOSS_POS_X (FIELD_MAX_X/2)
+#define BOSS_POS_Y 100.0
+//ボスが持つ弾の最大数
+#define BOSS_BULLET_MAX 3000
+//弾幕最大数
+#define DANMAKU_MAX 50
+
 #include "struct.h"
 

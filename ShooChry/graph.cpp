@@ -22,6 +22,11 @@ void graph_enemy() {
 	}
 }
 
+void graph_boss() {
+	if (boss.flag == 0)return;
+	DrawRotaGraphF(boss.x + FIELD_X + dn.x, boss.y + FIELD_Y + dn.y, 1.0f, 0.0f, img_dot_riria[0], TRUE);
+}
+
 //弾丸の描画
 void graph_bullet() {
 	int i, j;
@@ -34,7 +39,7 @@ void graph_bullet() {
 						SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
 
 					DrawRotaGraphF(
-						shot[i].bullet[j].x + FIELD_X, shot[i].bullet[j].y + FIELD_Y,
+						shot[i].bullet[j].x + FIELD_X + dn.x, shot[i].bullet[j].y + FIELD_Y + dn.y,
 						1.0, shot[i].bullet[j].angle + PI / 2,
 						img_bullet[shot[i].bullet[j].knd][shot[i].bullet[j].col], TRUE);
 
@@ -44,8 +49,26 @@ void graph_bullet() {
 			}
 		}
 	}
+	//ボス
+	if (boss_shot.flag>0) {//弾幕データがオンなら
+		for (j = 0;j<BOSS_BULLET_MAX;j++) {//その弾幕が持つ弾の最大数分ループ
+			if (boss_shot.bullet[j].flag != 0) {//弾データがオンなら
+				if (boss_shot.bullet[j].eff == 1)
+					SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
+
+				DrawRotaGraphF(
+					boss_shot.bullet[j].x + FIELD_X + dn.x, boss_shot.bullet[j].y + FIELD_Y + dn.y,
+					1.0, boss_shot.bullet[j].angle + PI / 2,
+					img_bullet[boss_shot.bullet[j].knd][boss_shot.bullet[j].col], TRUE);
+
+				if (boss_shot.bullet[j].eff == 1)
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			}
+		}
+	}
 	SetDrawMode(DX_DRAWMODE_NEAREST);//描画形式を戻す
 }
+
 
 void graph_cshot() {
 	for (int i = 0;i<CSHOT_MAX;i++) {
@@ -70,6 +93,11 @@ void graph_effect(int knd) {
 	}
 }
 
+void graph_develop() {
+	DrawFormatString(0, 0, GetColor(255, 255, 255), "%d", stage_count);
+}
+
+
 extern void graph_back_main();
 
 void graph_main() {
@@ -77,6 +105,14 @@ void graph_main() {
 
 	graph_back_main();//背景描画メイン
 	graph_effect(0);//敵が死ぬエフェクト
+
+	if (bright_set.brt != 255)SetDrawBright(255, 255, 255);
+
+	graph_effect(4);//喰らいボムのエフェクト
+
+	if (bright_set.brt != 255)SetDrawBright(bright_set.brt, bright_set.brt, bright_set.brt);
+
+	graph_boss();
 	graph_enemy();//敵の描画
 	graph_cshot();//自機ショットの描画
 
@@ -94,5 +130,6 @@ void graph_main() {
 	graph_effect(2);//ボム線のエフェクト
 	graph_effect(3);//ボムキャラのエフェクト
 	graph_board();//ボードの描画
-}
 
+	graph_develop();
+}
