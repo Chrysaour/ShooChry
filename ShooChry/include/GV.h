@@ -1,5 +1,5 @@
 #pragma once
-#include "DxLib.h"
+#include "../../DxLib_VC/Files/DxLib.h"
 #include "define.h"
 #include "math.h"
 
