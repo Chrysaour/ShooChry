@@ -1,9 +1,31 @@
 #include "include/GV.h"
 
 void calc_ch() {
-	ch.cnt++;
-	ch.img = (ch.cnt % 24) / 6;
+	if (ch.cnt == 0 && ch.flag == 2) {//今の瞬間死んだら
+		ch.x = FIELD_MAX_X / 2;//座標セット
+		ch.y = FIELD_MAX_Y + 30;
+		ch.mutekicnt++;//無敵状態へ
+	}
+	if (ch.flag == 2) {//死んで浮上中なら
+		unsigned int push = CheckStatePad(configpad.left) + CheckStatePad(configpad.right)
+			+ CheckStatePad(configpad.up) + CheckStatePad(configpad.down);
+		ch.y -= 1.5;//キャラを上に上げる
+					//１秒以上か、キャラがある程度上にいて、何かおされたら
+		if (ch.cnt>60 || (ch.y<FIELD_MAX_Y - 20 && push)) {
+			ch.cnt = 0;
+			ch.flag = 0;//キャラステータスを元に戻す
+		}
+	}
+	if (ch.mutekicnt>0) {//無敵カウントが0じゃなければ
+		ch.mutekicnt++;
+		if (ch.mutekicnt>120)//２秒以上たったら
+			ch.mutekicnt = 0;//戻す
+	}
+
+	ch.cnt++;//キャラクタカウントアップ
+	ch.img = (ch.cnt % 24) / 6;//現在の画像決定
 }
+
 
 void ch_move() {//キャラクタの移動制御
 	int i, sayu_flag = 0, joge_flag = 0;
@@ -27,7 +49,7 @@ void ch_move() {//キャラクタの移動制御
 	if (sayu_flag == 1 && joge_flag == 1)//左右、上下両方の入力があれば斜めだと言う事
 		naname = sqrt(2.0);//移動スピードを1/ルート2に
 
-	for (int i = 0;i<4;i++) {//4方向分ループ
+	for (i = 0;i<4;i++) {//4方向分ループ
 		if (inputpad[i]>0) {//i方向のキーボード、パッドどちらかの入力があれば
 			x = ch.x, y = ch.y;//今の座標をとりあえずx,yに格納
 			mx = move_x[i];   my = move_y[i];//移動分をmx,myに代入

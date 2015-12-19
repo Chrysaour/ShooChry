@@ -45,3 +45,5 @@ GLOBAL effect_t effect[EFFECT_MAX];//エフェクト
 
 GLOBAL int img_back[10];//背景用画像
 GLOBAL int count;
+
+GLOBAL bullet_info_t bullet_info[10];//弾情報

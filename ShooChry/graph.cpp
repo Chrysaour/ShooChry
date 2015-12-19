@@ -1,7 +1,9 @@
 #include "include/GV.h"
 
+//Ž©‹@•`‰æ
 void graph_ch() {
-	DrawRotaGraphF(ch.x + FIELD_X, ch.y + FIELD_Y, 1.0f, 0.0f, img_ch[0][ch.img], TRUE);
+	if (ch.mutekicnt % 2 == 0)
+		DrawRotaGraphF(ch.x + FIELD_X, ch.y + FIELD_Y, 1.0f, 0.0f, img_ch[0][ch.img], TRUE);
 }
 
 void graph_board() {

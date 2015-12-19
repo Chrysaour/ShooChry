@@ -81,3 +81,10 @@ typedef struct {
 	int flag, cnt, col;
 	double x, y;
 }del_effect_t;
+
+//’e‚Ìî•ñ
+typedef struct {
+	int size_x, size_y, col_num;
+	double range;
+}bullet_info_t;
+

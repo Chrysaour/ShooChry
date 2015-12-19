@@ -25,17 +25,18 @@ void load() {
 	LoadDivGraph("dat/img/bullet/b7.png", 9, 9, 1, 16, 16, img_bullet[7]);
 	LoadDivGraph("dat/img/bullet/b8.png", 10, 10, 1, 12, 18, img_bullet[8]);
 	LoadDivGraph("dat/img/bullet/b9.png", 3, 3, 1, 13, 19, img_bullet[9]);
-
 	LoadDivGraph("dat/img/enemy/hit_effect.png", 5, 5, 1, 140, 140, img_del_effect);
 
 	//敵のショット音を読み込む
 	sound_se[0] = LoadSoundMem("dat/se/enemy_shot.wav");
 	sound_se[1] = LoadSoundMem("dat/se/enemy_death.wav");
 	sound_se[2] = LoadSoundMem("dat/se/cshot.wav");
+	sound_se[3] = LoadSoundMem("../dat/se/char_death.wav");//自機死に音
 	sound_se[8] = LoadSoundMem("dat/se/hit.wav");
-
+	
 	ChangeVolumeSoundMem(50, sound_se[0]);//各素材の再生ボリュームを設定
 	ChangeVolumeSoundMem(128, sound_se[1]);
+	ChangeVolumeSoundMem(80, sound_se[3]);
 	ChangeVolumeSoundMem(128, sound_se[2]);
 	ChangeVolumeSoundMem(80, sound_se[8]);
 
