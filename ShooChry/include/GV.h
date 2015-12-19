@@ -1,5 +1,5 @@
 #pragma once
-#include "../../DxLib_VC/Files/DxLib.h"
+#include "../../DxLib_VC/Files/DxLib.h" //Specifying the actual location of header file
 #include "define.h"
 #include "math.h"
 
