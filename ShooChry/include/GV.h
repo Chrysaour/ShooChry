@@ -9,39 +9,39 @@
 #define GLOBAL extern 
 #endif
 
-#include "function.h"           //ŠÖ”éŒ¾
+#include "function.h"           //é–¢æ•°å®£è¨€
 
 GLOBAL int img_board[40];
-//‰æ‘œ—p•Ï”éŒ¾•”
-GLOBAL int img_ch[2][12];       //ƒLƒƒƒ‰ƒNƒ^‰æ‘œ9–‡•ª@X2(•Ïg—p)
+//ç”»åƒç”¨å¤‰æ•°å®£è¨€éƒ¨
+GLOBAL int img_ch[2][12];       //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ç”»åƒ9æšåˆ†ã€€X2(å¤‰èº«ç”¨)
 GLOBAL int func_state;
-								//\‘¢‘Ì•Ï”éŒ¾•”
-GLOBAL ch_t ch;                 //ƒLƒƒƒ‰ƒNƒ^ƒf[ƒ^éŒ¾
+								//æ§‹é€ ä½“å¤‰æ•°å®£è¨€éƒ¨
+GLOBAL ch_t ch;                 //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ‡ãƒ¼ã‚¿å®£è¨€
 
 GLOBAL configpad_t configpad;
 
 GLOBAL int stage_count;
-GLOBAL int img_enemy[3][9];//“G‰æ‘œ9–‡•ª@X3‘Ì•ª
+GLOBAL int img_enemy[3][9];//æ•µç”»åƒ9æšåˆ†ã€€X3ä½“åˆ†
 GLOBAL enemy_t enemy[ENEMY_MAX];
 
-GLOBAL enemy_order_t enemy_order[ENEMY_ORDER_MAX];//“G‚ÌoŒ»î•ñ
+GLOBAL enemy_order_t enemy_order[ENEMY_ORDER_MAX];//æ•µã®å‡ºç¾æƒ…å ±
 
-GLOBAL int img_bullet[10][10]; //’e‚Ì‰æ‘œ
+GLOBAL int img_bullet[10][10]; //å¼¾ã®ç”»åƒ
 
-							   //‰¹Šyƒtƒ@ƒCƒ‹—p•Ï”•”
+							   //éŸ³æ¥½ãƒ•ã‚¡ã‚¤ãƒ«ç”¨å¤‰æ•°éƒ¨
 GLOBAL int sound_se[SE_MAX];
 
-GLOBAL int se_flag[SE_MAX];    //ƒTƒEƒ“ƒhƒtƒ‰ƒO
+GLOBAL int se_flag[SE_MAX];    //ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ãƒ©ã‚°
 
-GLOBAL shot_t shot[SHOT_MAX];//ƒVƒ‡ƒbƒgî•ñ
+GLOBAL shot_t shot[SHOT_MAX];//ã‚·ãƒ§ãƒƒãƒˆæƒ…å ±
 
-GLOBAL int img_cshot[2];        //©‹@ƒVƒ‡ƒbƒg—p‰æ‘œ
-GLOBAL cshot_t cshot[CSHOT_MAX];//©‹@ƒVƒ‡ƒbƒg“o˜^—p•Ï”
+GLOBAL int img_cshot[2];        //è‡ªæ©Ÿã‚·ãƒ§ãƒƒãƒˆç”¨ç”»åƒ
+GLOBAL cshot_t cshot[CSHOT_MAX];//è‡ªæ©Ÿã‚·ãƒ§ãƒƒãƒˆç™»éŒ²ç”¨å¤‰æ•°
 
 GLOBAL int img_del_effect[5];
 
-GLOBAL del_effect_t del_effect[DEL_EFFECT_MAX];//Á–ÅƒGƒtƒFƒNƒg
-GLOBAL effect_t effect[EFFECT_MAX];//ƒGƒtƒFƒNƒg
+GLOBAL del_effect_t del_effect[DEL_EFFECT_MAX];//æ¶ˆæ»…ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+GLOBAL effect_t effect[EFFECT_MAX];//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 
-GLOBAL int img_back[10];//”wŒi—p‰æ‘œ
+GLOBAL int img_back[10];//èƒŒæ™¯ç”¨ç”»åƒ
 GLOBAL int count;
