@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../../DxLib_VC/Files/DxLib.h" //Specifying the actual location of header file
 #include "define.h"
 #include "math.h"
@@ -14,8 +14,9 @@
 GLOBAL int img_board[40];
 //画像用変数宣言部
 GLOBAL int img_ch[2][12];       //キャラクタ画像9枚分　X2(変身用)
+GLOBAL int img_chetc[10];	//キャラクタに関する他の画像
 GLOBAL int func_state;
-								//構造体変数宣言部
+GLOBAL int img_etc[50];//その他の画像
 GLOBAL ch_t ch;                 //キャラクタデータ宣言
 
 GLOBAL configpad_t configpad;
@@ -26,7 +27,7 @@ GLOBAL enemy_t enemy[ENEMY_MAX];
 
 GLOBAL enemy_order_t enemy_order[ENEMY_ORDER_MAX];//敵の出現情報
 
-GLOBAL int img_bullet[10][10]; //弾の画像
+GLOBAL int img_bullet[20][10]; //弾用画像
 
 							   //音楽ファイル用変数部
 GLOBAL int sound_se[SE_MAX];

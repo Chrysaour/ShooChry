@@ -1,9 +1,10 @@
 #include "include/GV.h"
 
 //渡された情報を構造体に入れる関数
-void input_bullet_info(bullet_info_t *binfo, int size_x, int size_y, int col_num, double range) {
+void input_bullet_info(bullet_info_t *binfo, int size_x, int size_y, int col_num, double range, int kaiten) {
 	binfo->size_x = size_x;  binfo->size_y = size_y;
 	binfo->col_num = col_num; binfo->range = range;
+	binfo->kaiten = kaiten;
 }
 
 //一番最初の初期化
@@ -19,16 +20,16 @@ void first_ini() {
 	configpad.change = 6;
 
 	//例：弾0は76x76ピクセルで、5色あり、当たり範囲17ピクセル
-	input_bullet_info(&bullet_info[0], 76, 76, 5, 17.0);
-	input_bullet_info(&bullet_info[1], 22, 22, 6, 4.0);
-	input_bullet_info(&bullet_info[2], 5, 120, 10, 2.5);
-	input_bullet_info(&bullet_info[3], 19, 34, 5, 2.0);
-	input_bullet_info(&bullet_info[4], 38, 38, 10, 2.0);
-	input_bullet_info(&bullet_info[5], 14, 16, 3, 3.5);
-	input_bullet_info(&bullet_info[6], 14, 18, 3, 2.0);
-	input_bullet_info(&bullet_info[7], 16, 16, 9, 2.5);
-	input_bullet_info(&bullet_info[8], 12, 18, 10, 1.5);
-	input_bullet_info(&bullet_info[9], 13, 19, 3, 2.0);
+	input_bullet_info(&bullet_info[0], 76, 76, 5, 17.0, 0);
+	input_bullet_info(&bullet_info[1], 22, 22, 6, 4.0, 0);
+	input_bullet_info(&bullet_info[2], 5, 120, 10, 2.5, 0);
+	input_bullet_info(&bullet_info[3], 19, 34, 5, 2.0, 0);
+	input_bullet_info(&bullet_info[4], 38, 38, 10, 2.0, 0);
+	input_bullet_info(&bullet_info[5], 14, 16, 3, 3.5, 0);
+	input_bullet_info(&bullet_info[6], 14, 18, 3, 2.0, 0);
+	input_bullet_info(&bullet_info[7], 16, 16, 9, 2.5, 1);
+	input_bullet_info(&bullet_info[8], 12, 18, 10, 1.5, 0);
+	input_bullet_info(&bullet_info[9], 13, 19, 3, 2.0, 0);
 }
 
 //ゲームの初期化
@@ -46,11 +47,19 @@ void ini() {
 	memset(&dn, 0, sizeof(dn_t));
 	memset(&boss, 0, sizeof(boss_t));
 
-	ch.x = FIELD_MAX_X / 2;
-	ch.y = FIELD_MAX_Y * 3 / 4;
+	ch.x = FMX / 2;
+	ch.y = FMY * 3 / 4;
 	ch.power = 500;
-	boss.appear_count[0] = 100;
-	for (int i = 0;i<DANMAKU_MAX;i++)
-		boss.set_hp[i] = 5000;
+
+	/*弾幕それぞれの設定。後々きちんと設定しましょう。*/
+	boss.appear_count[0] = 50;//中ボスが出現する時刻
+	for (int i = 0;i<DANMAKU_MAX;i++) {//弾幕それぞれのHP
+		boss.set_hp[i] = 10000;
+		boss.hp_max = 10000;
+	}
+	for (int i = 0;i<DANMAKU_MAX;i++)//弾幕それぞれの背景の種類
+		boss.back_knd[i] = 1;
+	/*ここまで*/
+
 	bright_set.brt = 255;
 }

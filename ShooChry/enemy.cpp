@@ -85,7 +85,7 @@ void enemy_act() {
 				enemy[i].cnt++;
 				enemy[i].img = enemy[i].muki * 3 + (enemy[i].cnt % 18) / 6;
 				//“G‚ª‰æ–Ê‚©‚çŠO‚ê‚½‚çÁ‚·
-				if (enemy[i].x<-20 || FIELD_MAX_X + 20<enemy[i].x || enemy[i].y<-20 || FIELD_MAX_Y + 20<enemy[i].y)
+				if (enemy[i].x<-20 || FMX + 20<enemy[i].x || enemy[i].y<-20 || FMY + 20<enemy[i].y)
 					enemy[i].flag = 0;
 				if (enemy[i].bltime == enemy[i].cnt)
 					enter_shot(i);

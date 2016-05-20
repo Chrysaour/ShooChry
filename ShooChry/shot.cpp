@@ -40,8 +40,8 @@ void shot_calc(int n) {
 			shot[n].bullet[i].x += cos(shot[n].bullet[i].angle)*shot[n].bullet[i].spd;
 			shot[n].bullet[i].y += sin(shot[n].bullet[i].angle)*shot[n].bullet[i].spd;
 			shot[n].bullet[i].cnt++;
-			if (shot[n].bullet[i].x<-50 || shot[n].bullet[i].x>FIELD_MAX_X + 50 ||
-				shot[n].bullet[i].y<-50 || shot[n].bullet[i].y>FIELD_MAX_Y + 50) {//‰æ–Ê‚©‚çŠO‚ê‚½‚ç
+			if (shot[n].bullet[i].x<-50 || shot[n].bullet[i].x>FMX + 50 ||
+				shot[n].bullet[i].y<-50 || shot[n].bullet[i].y>FMY + 50) {//‰æ–Ê‚©‚çŠO‚ê‚½‚ç
 				if (shot[n].bullet[i].till<shot[n].bullet[i].cnt)//Å’áÁ‚¦‚È‚¢ŽžŠÔ‚æ‚è’·‚¯‚ê‚Î
 					shot[n].bullet[i].flag = 0;//Á‚·
 			}

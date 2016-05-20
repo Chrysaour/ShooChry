@@ -73,8 +73,8 @@ void calc_cshot() {
 			cshot[i].x += cos(cshot[i].angle)*cshot[i].spd;
 			cshot[i].y += sin(cshot[i].angle)*cshot[i].spd;
 			cshot[i].cnt++;
-			if (cshot[i].x<-dranx || cshot[i].x>FIELD_MAX_X + dranx ||
-				cshot[i].y<-drany || cshot[i].y>FIELD_MAX_Y + drany)//‰æ–Ê‚©‚çŠO‚ê‚½‚ç
+			if (cshot[i].x<-dranx || cshot[i].x>FMX + dranx ||
+				cshot[i].y<-drany || cshot[i].y>FMY + drany)//‰æ–Ê‚©‚çŠO‚ê‚½‚ç
 				cshot[i].flag = 0;
 		}
 	}

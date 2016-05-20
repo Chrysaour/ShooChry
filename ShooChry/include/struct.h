@@ -55,9 +55,9 @@ typedef struct {
 //弾に関する構造体
 typedef struct {
 	//フラグ、種類、カウンタ、色、状態、少なくとも消さない時間、エフェクトの種類
-	int flag, knd, cnt, col, state, till, eff;
+	int flag, knd, cnt, col, state, till, eff, kaiten, eff_detail;
 	//座標、角度、速度、ベースの角度、一時記憶スピード
-	double x, y, angle, spd, base_angle[1], rem_spd[1];
+	double x, y, vx, vy, angle, spd, base_angle[1], rem_spd[1];
 }bullet_t;
 
 //ショットに関する構造体
@@ -83,7 +83,7 @@ typedef struct {
 
 //弾の情報
 typedef struct {
-	int size_x, size_y, col_num;
+	int size_x, size_y, col_num, kaiten;
 	double range;
 }bullet_info_t;
 
@@ -109,7 +109,7 @@ typedef struct {
 	//フラグ、種類、カウンタ、どの敵から発射されたかの番号、色
 	int flag, knd, cnt, num;
 	//ベース角度、ベーススピード
-	double base_angle[1], base_spd[1];
+	double base_angle[10], base_spd[1];
 	bullet_t bullet[BOSS_BULLET_MAX];
 }boss_shot_t;
 
@@ -123,7 +123,7 @@ typedef struct {
 typedef struct {
 	int flag, cnt, knd, wtime, state, endtime, hagoromo, graph_flag;
 	int hp, hp_max;
-	int appear_count[2], set_hp[DANMAKU_MAX];
-	double x, y, ang, spd;
+	int appear_count[2], set_hp[DANMAKU_MAX], back_knd[DANMAKU_MAX];
+	double x, y, dx, dy, ang, spd;
 	phy_t phy;
 }boss_t;

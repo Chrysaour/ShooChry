@@ -10,8 +10,8 @@ void calc_ch() {
 		}
 	}
 	if (ch.cnt == 0 && ch.flag == 2) {//今の瞬間死んだら
-		ch.x = FIELD_MAX_X / 2;//座標セット
-		ch.y = FIELD_MAX_Y + 30;
+		ch.x = FMX / 2;//座標セット
+		ch.y = FMY + 30;
 		ch.mutekicnt++;//無敵状態へ
 	}
 	if (ch.flag == 2) {//死んで浮上中なら
@@ -19,7 +19,7 @@ void calc_ch() {
 			+ CheckStatePad(configpad.up) + CheckStatePad(configpad.down);
 		ch.y -= 1.5;//キャラを上に上げる
 					//１秒以上か、キャラがある程度上にいて、何かおされたら
-		if (ch.cnt>60 || (ch.y<FIELD_MAX_Y - 20 && push)) {
+		if (ch.cnt>60 || (ch.y<FMY - 20 && push)) {
 			ch.cnt = 0;
 			ch.flag = 0;//キャラステータスを元に戻す
 		}
@@ -65,7 +65,7 @@ void ch_move() {//キャラクタの移動制御
 				mx = move_x[i] / 3; my = move_y[i] / 3;//移動スピードを1/3に
 			}
 			x += mx / naname, y += my / naname;//今の座標と移動分を足す
-			if (!(x<10 || x>FIELD_MAX_X - 10 || y<5 || y>FIELD_MAX_Y - 5)) {//計算結果移動可能範囲内なら
+			if (!(x<10 || x>FMX - 10 || y<5 || y>FMY - 5)) {//計算結果移動可能範囲内なら
 				ch.x = x, ch.y = y;//実際に移動させる
 			}
 		}

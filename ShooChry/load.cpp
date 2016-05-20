@@ -8,6 +8,14 @@ void load() {
 	LoadDivGraph("dat/img/char/0.png", 12, 4, 3, 73, 73, img_ch[0]);
 	LoadDivGraph("dat/img/enemy/0.png", 9, 3, 3, 32, 32, img_enemy[0]);
 
+	img_etc[1] = LoadGraph("dat/img/enemy/hp.png");
+	img_etc[2] = LoadGraph("dat/img/enemy/bossback.png");
+	img_etc[5] = LoadGraph("dat/img/enemy/bossback3.png");
+	img_etc[6] = LoadGraph("dat/img/enemy/bossback4.png");
+	img_etc[7] = LoadGraph("dat/img/enemy/hp_boss.png");//ボスのHP
+
+	img_chetc[0] = LoadGraph("dat/img/char/atari.png");//当たり判定
+	img_chetc[2] = LoadGraph("dat/img/char/ball.png");//ボール
 
 	img_cshot[0] = LoadGraph("dat/img/char/bl_00.png");
 	img_cshot[1] = LoadGraph("dat/img/char/bl_01.png");
@@ -27,9 +35,10 @@ void load() {
 	LoadDivGraph("dat/img/bullet/b4.png", 10, 10, 1, 38, 38, img_bullet[4]);
 	LoadDivGraph("dat/img/bullet/b5.png", 3, 3, 1, 14, 16, img_bullet[5]);
 	LoadDivGraph("dat/img/bullet/b6.png", 3, 3, 1, 14, 18, img_bullet[6]);
-	LoadDivGraph("dat/img/bullet/b7.png", 9, 9, 1, 16, 16, img_bullet[7]);
+	LoadDivGraph("dat/img/bullet/b7.png", 10, 10, 1, 16, 16, img_bullet[7]);
 	LoadDivGraph("dat/img/bullet/b8.png", 10, 10, 1, 12, 18, img_bullet[8]);
 	LoadDivGraph("dat/img/bullet/b9.png", 3, 3, 1, 13, 19, img_bullet[9]);
+	LoadDivGraph("dat/img/bullet/b10.png", 8, 8, 1, 8, 8, img_bullet[10]);
 	LoadDivGraph("dat/img/enemy/hit_effect.png", 5, 5, 1, 140, 140, img_del_effect);
 	LoadDivGraph("dat/img/char/riria.png", 8, 8, 1, 100, 100, img_dot_riria);
 
@@ -40,6 +49,7 @@ void load() {
 	sound_se[2] = LoadSoundMem("dat/se/cshot.wav");
 	sound_se[3] = LoadSoundMem("dat/se/char_death.wav");//自機死に音
 	sound_se[8] = LoadSoundMem("dat/se/hit.wav");
+	sound_se[11] = LoadSoundMem("dat/se/boss_change.wav");
 	sound_se[14] = LoadSoundMem("dat/se/bom0.wav");
 	sound_se[15] = LoadSoundMem("dat/se/bom1.wav");
 	

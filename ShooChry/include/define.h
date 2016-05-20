@@ -1,11 +1,11 @@
 #pragma once
 
 //フィールドの広さ
-#define FIELD_MAX_X 384
-#define FIELD_MAX_Y 448
+#define FMX 384
+#define FMY 448
 //フィールドの左上の座標
-#define FIELD_X 32
-#define FIELD_Y 16
+#define FX 32
+#define FY 16
 //パッドキーの最大数
 #define PAD_MAX 16
 
@@ -41,8 +41,8 @@
 #define DEL_EFFECT_MAX 30
 
 //ボスの定位置
-#define BOSS_POS_X (FIELD_MAX_X/2)
-#define BOSS_POS_Y 100.0
+#define BOSS_POS_X (FMX/2)
+#define BOSS_POS_Y 120.0
 //ボスが持つ弾の最大数
 #define BOSS_BULLET_MAX 3000
 //弾幕最大数
