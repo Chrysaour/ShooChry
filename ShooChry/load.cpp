@@ -1,26 +1,32 @@
 #include "include/GV.h"
 
 void load() {
+	int t;
+	SetCreateSoundDataType(DX_SOUNDDATATYPE_MEMPRESS);
+
+	t = GetNowCount();
 	img_board[10] = LoadGraph("dat/img/board/10.png");
 	img_board[11] = LoadGraph("dat/img/board/11.png");
 	img_board[12] = LoadGraph("dat/img/board/12.png");
 	img_board[20] = LoadGraph("dat/img/board/20.png");
-	LoadDivGraph("dat/img/char/0.png", 12, 4, 3, 73, 73, img_ch[0]);
-	LoadDivGraph("dat/img/enemy/0.png", 9, 3, 3, 32, 32, img_enemy[0]);
 
 	img_etc[1] = LoadGraph("dat/img/enemy/hp.png");
 	img_etc[2] = LoadGraph("dat/img/enemy/bossback.png");
 	img_etc[5] = LoadGraph("dat/img/enemy/bossback3.png");
 	img_etc[6] = LoadGraph("dat/img/enemy/bossback4.png");
 	img_etc[7] = LoadGraph("dat/img/enemy/hp_boss.png");//ボスのHP
+	img_etc[8] = LoadGraph("dat/img/board/hoshi.png");//☆(41)
 
 	img_chetc[0] = LoadGraph("dat/img/char/atari.png");//当たり判定
-	img_chetc[2] = LoadGraph("dat/img/char/ball.png");//ボール
+	//img_chetc[2] = LoadGraph("dat/img/char/ball.png");//ボール
 
 	img_cshot[0] = LoadGraph("dat/img/char/bl_00.png");
 	img_cshot[1] = LoadGraph("dat/img/char/bl_01.png");
+	img_cshot[2] = LoadGraph("dat/img/char/ball.png");
 
 	img_back[0] = LoadGraph("dat/img/back/0/back0.png");
+	img_back[10] = LoadGraph("dat/img/back/10/kotei0.png");
+	img_back[11] = LoadGraph("dat/img/back/10/scroll0.png");
 
 	img_eff_bom[0] = LoadGraph("dat/img/effect/bom0.png");
 	img_eff_bom[1] = LoadGraph("dat/img/effect/bom1.png");
@@ -39,9 +45,20 @@ void load() {
 	LoadDivGraph("dat/img/bullet/b8.png", 10, 10, 1, 12, 18, img_bullet[8]);
 	LoadDivGraph("dat/img/bullet/b9.png", 3, 3, 1, 13, 19, img_bullet[9]);
 	LoadDivGraph("dat/img/bullet/b10.png", 8, 8, 1, 8, 8, img_bullet[10]);
+	LoadDivGraph("dat/img/bullet/b11.png", 8, 8, 1, 35, 32, img_bullet[11]);
+	LoadDivGraph("dat/img/bullet/l0.png", 2, 2, 1, 30, 460, img_lazer[0]);
+	LoadDivGraph("dat/img/bullet/l0_moto.png", 2, 2, 1, 70, 70, img_lazer_moto[0]);
 	LoadDivGraph("dat/img/enemy/hit_effect.png", 5, 5, 1, 140, 140, img_del_effect);
 	LoadDivGraph("dat/img/char/riria.png", 8, 8, 1, 100, 100, img_dot_riria);
-
+	LoadDivGraph("dat/img/char/0.png", 12, 4, 3, 73, 73, img_ch[0]);
+	LoadDivGraph("dat/img/enemy/0.png", 9, 3, 3, 32, 32, img_enemy[0]);
+	LoadDivGraph("dat/img/item/p0.png", 2, 2, 1, 35, 35, img_item[0]);
+	LoadDivGraph("dat/img/item/p1.png", 2, 2, 1, 35, 35, img_item[1]);
+	LoadDivGraph("dat/img/item/p2.png", 2, 2, 1, 15, 15, img_item[2]);
+	LoadDivGraph("dat/img/item/p3.png", 2, 2, 1, 35, 35, img_item[3]);
+	LoadDivGraph("dat/img/item/p4.png", 2, 2, 1, 35, 35, img_item[4]);
+	LoadDivGraph("dat/img/item/p5.png", 2, 2, 1, 35, 35, img_item[5]);
+	LoadDivGraph("dat/img/num/2.png", 10, 10, 1, 16, 18, img_num[0]);//(41)
 
 	//敵のショット音を読み込む
 	sound_se[0] = LoadSoundMem("dat/se/enemy_shot.wav");
@@ -49,21 +66,43 @@ void load() {
 	sound_se[2] = LoadSoundMem("dat/se/cshot.wav");
 	sound_se[3] = LoadSoundMem("dat/se/char_death.wav");//自機死に音
 	sound_se[8] = LoadSoundMem("dat/se/hit.wav");
+	sound_se[9] = LoadSoundMem("dat/se/boss_death.wav");
 	sound_se[11] = LoadSoundMem("dat/se/boss_change.wav");
 	sound_se[14] = LoadSoundMem("dat/se/bom0.wav");
 	sound_se[15] = LoadSoundMem("dat/se/bom1.wav");
+	sound_se[33] = LoadSoundMem("dat/se/lazer.wav");
+	sound_se[34] = LoadSoundMem("dat/se/item_get.wav");
+	//sound_se[99] = LoadSoundMem("dat/music/youmu.wav");//反魂蝶のBGMを再生する場合はココに音楽ファイルを用意して下さい
 	
-	ChangeVolumeSoundMem(50, sound_se[0]);//各素材の再生ボリュームを設定
-	ChangeVolumeSoundMem(128, sound_se[1]);
-	ChangeVolumeSoundMem(80, sound_se[3]);
-	ChangeVolumeSoundMem(128, sound_se[2]);
-	ChangeVolumeSoundMem(80, sound_se[8]);
+	ChangeVolumeSoundMem(32, sound_se[0]);
+	ChangeVolumeSoundMem(32, sound_se[1]);
+	ChangeVolumeSoundMem(32, sound_se[2]);
+	ChangeVolumeSoundMem(32, sound_se[3]);
+	ChangeVolumeSoundMem(32, sound_se[8]);
+	ChangeVolumeSoundMem(64, sound_se[9]);
+	ChangeVolumeSoundMem(64, sound_se[11]);
+	ChangeVolumeSoundMem(64, sound_se[14]);
+	ChangeVolumeSoundMem(64, sound_se[15]);
+	ChangeVolumeSoundMem(64, sound_se[33]);
+	ChangeVolumeSoundMem(32, sound_se[34]);
+
+	//(41)
+	color[0] = GetColor(255, 255, 255);//白
+	color[1] = GetColor(0, 0, 0);//黒
+	color[2] = GetColor(255, 0, 0);//赤
+	color[3] = GetColor(0, 255, 0);//緑
+	color[4] = GetColor(0, 0, 255);//青
+	color[5] = GetColor(255, 255, 0);//黄色
+	color[6] = GetColor(0, 255, 255);//青緑
+	color[7] = GetColor(255, 0, 255);//紫
+
+	font[0] = CreateFontToHandle("HGPｺﾞｼｯｸE", 15, 2, DX_FONTTYPE_ANTIALIASING_EDGE);
 }
 
 //敵の出現情報をエクセルから読み込んで格納する関数
 void load_story() {
 	int n, num, i, fp;
-	char fname[32] = { "dat/csv/storyH0.csv" };
+	char fname[32] = { "dat/csv/47章/storyH0.csv" };
 	int input[64];
 	char inputc[64];
 

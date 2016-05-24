@@ -1,5 +1,7 @@
 #include "include/GV.h"
 
+extern void dn_calc();
+
 //エフェクトの登録空き番号を探す
 int search_effect() {
 	for (int i = 0;i<EFFECT_MAX;i++) {
@@ -31,10 +33,7 @@ void calc_effect() {
 				if (effect[i].cnt == 60) {
 					effect[i].spd = 0;
 					se_flag[15] = 1;
-					dn.flag = 1;
-					dn.cnt = 0;
-					dn.size = 11;
-					dn.time = 20;
+					enter_dn(11, 20);//(45)
 				}
 				//明るさと大きさ計算
 				effect[i].r += 0.015;
@@ -253,21 +252,18 @@ void enter_crybom_effect() {
 	}
 }
 
-//ドガーンとゆれる画面の処理
-void dn_calc() {
-	if (dn.flag == 1) {
-		dn.x = (int)rang(dn.size);
-		dn.y = (int)rang(dn.size);
-		dn.cnt++;
-		if (dn.cnt>dn.time) {//指定された時間がたつと終わる
-			dn.flag = 0;
-			dn.x = 0;
-			dn.y = 0;
+void calc_child() {
+	for (int i = 0;i<CHILD_MAX;i++) {
+		if (child[i].flag>0) {
+			child[i].x += cos(child[i].angle)*child[i].spd;
+			child[i].y += sin(child[i].angle)*child[i].spd;
+			child[i].cnt++;
 		}
 	}
 }
 
 void effect_main() {
+	calc_child();
 	dn_calc();//ドガーンとゆれる画面の処理
 	calc_del_effect();//消滅エフェクトの計算
 	calc_effect();//エフェクトの計算

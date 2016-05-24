@@ -46,7 +46,8 @@ void GetHitPadStateAll() {
 
 //渡されたパッドキー番号の入力状態を返す。返り値が-1なら不正
 int CheckStatePad(unsigned int Handle) {
-	if (0 <= Handle && Handle<PAD_MAX) {
+	//if (0 <= Handle && Handle<PAD_MAX) { // CWARN.NOEFFECT.UCMP.GE
+	if(Handle<PAD_MAX){
 		return pad.key[Handle];
 	}
 	else {

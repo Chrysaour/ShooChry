@@ -1,5 +1,7 @@
 #include "include/GV.h"
 
+extern void enter_char_item();//(39章)
+
 void calc_ch() {
 	if (ch.flag == 1) {//喰らいボム受付中なら
 		bright_set.brt = 80;//暗く
@@ -10,6 +12,7 @@ void calc_ch() {
 		}
 	}
 	if (ch.cnt == 0 && ch.flag == 2) {//今の瞬間死んだら
+		enter_char_item();//キャラのアイテム登録(39章)
 		ch.x = FMX / 2;//座標セット
 		ch.y = FMY + 30;
 		ch.mutekicnt++;//無敵状態へ

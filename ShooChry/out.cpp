@@ -2,8 +2,9 @@
 
 #define ENEMY_RANGE_MAX 4
 #define CSHOT_RANGE_MAX 2
-#define CRANGE 2.0
 #define BRANGE 40.0
+
+extern int out_lazer();
 
 //敵の当たり判定範囲
 int enemy_range[ENEMY_RANGE_MAX] = { 16,30,16,50 };
@@ -90,6 +91,50 @@ int out_judge_bossshot(int n) {
 	return 0;
 }
 
+
+int serch_item() {
+	for (int i = 0;i<ITEM_MAX;i++)
+		if (item[i].flag == 0)
+			return i;
+	return -1;
+}
+
+//アイテム登録
+//アイテム　0:小パワー 1:小点 2:弾点 3:小金 4:大パワー 5:大金
+void enter_item(double x, double y, int item_n[], int num) {//x,y,アイテムの種類,個数
+	int k;
+	double r[6] = { 0.6,0.6,1.0,0.6,1.0,1.0 };//dat/img/itemの画像の拡大率
+	for (int i = 0;i<num;i++) {//1つの敵から出るアイテムの最大数は6個
+		if (item_n[i] != -1) {//エクセルで指定したアイテムが-1(なし)なら終り
+			if ((k = serch_item()) != -1) {//登録出来る番号をさがす
+				item[k].flag = 1;
+				item[k].v = -3.5;	//速さ
+				item[k].cnt = 0;
+				item[k].state = 0;
+				item[k].x = x;
+				item[k].y = y;
+				if (i>0) {//複数なら適当にちらばらせる
+					item[k].x += rang(40);
+					item[k].y += rang(40);
+				}
+				item[k].knd = item_n[i];//指定したアイテムを出現させる
+				item[k].r = r[item[k].knd];
+			}
+		}
+	}
+}
+
+//敵から出るアイテム
+void enter_enemy_item(int s) {
+	enter_item(enemy[s].x, enemy[s].y, enemy[s].item_n, sizeof(enemy[s].item_n) / sizeof(int));
+}
+
+//キャラから出るアイテム
+void enter_char_item() {
+	int item_n[4] = { 4,4,4,4 };
+	enter_item(ch.x, ch.y, item_n, 4);
+}
+
 extern void enter_del_effect(int);
 
 //敵が死ぬかどうかの決定
@@ -100,6 +145,7 @@ void enemy_death_judge(int s) {
 		enemy[s].flag = 0;//敵を消滅させる
 		se_flag[1] = 1;//敵のピチュリ音
 		enter_del_effect(s);
+		enter_enemy_item(s);//敵sのアイテムを出現させる(39章)
 		for (i = 0;i<SHOT_MAX;i++) {//敵総数分
 			if (shot[i].flag != 0) {//登録されている弾幕データがあれば
 				if (s == shot[i].num) {//その敵が登録した弾幕があれば
@@ -151,6 +197,11 @@ void cshot_and_enemy() {
 //敵ショットと自機との処理
 void enemyshot_and_ch() {
 	int s, n;
+	if (ch.flag == 0 && ch.mutekicnt == 0 && out_lazer() == 1) {
+		ch.cnt = 0;
+		ch.flag = 1;
+		se_flag[3] = 1;
+	}
 	//雑魚敵のショット
 	for (s = 0;s<SHOT_MAX;s++) {//敵ショット総数
 		if (shot[s].flag>0) {//そのショットが登録されていたら
@@ -206,9 +257,36 @@ void cbom_and_enemy() {
 		hit_boss(ch.power / 20);//喰らわす
 }
 
+//アイテムとの接触
+//アイテム　0:小パワー 1:小点 2:弾点 3:小金 4:大パワー 5:大金
+void ch_and_item() {
+	for (int i = 0;i<ITEM_MAX;i++) {
+		if (item[i].flag>0) {
+			double x = item[i].x - ch.x, y = item[i].y - ch.y;
+			if (x*x + y*y<ITEM_HIT_BOX*ITEM_HIT_BOX) {
+				switch (item[i].knd) {
+				case 0:	ch.power += 3; break;
+				case 1:	ch.point += 1; break;
+				case 2:	ch.score += 1; break;
+				case 3:	ch.money += 1; break;
+				case 4:	ch.power += 50;break;
+				case 5:	ch.money += 10;break;
+				}
+				if (ch.power>500)ch.power = 500;
+				if (ch.point>9999)ch.point = 9999;
+				if (ch.money>999999)ch.money = 999999;
+				if (ch.score>999999999)ch.score = 999999999;
+				item[i].flag = 0;
+				se_flag[34] = 1;
+			}
+		}
+	}
+}
+
 //当たり判定メイン
 void out_main() {
 	cbom_and_enemy();//敵にボムを喰らわせる
 	cshot_and_enemy();//自機ショットと敵との処理
 	enemyshot_and_ch();//敵ショットと自機との処理
+	ch_and_item();//アイテム接触処理
 }

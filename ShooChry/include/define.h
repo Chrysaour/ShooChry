@@ -32,6 +32,10 @@
 //敵の行動パターンの最大数
 #define ENEMY_PATTERN_MAX 11
 
+//自機の当たり判定範囲
+#define CRANGE 2.0
+#define CRANGE11 5.0
+
 //自機ショットの登録最大数
 #define CSHOT_MAX 200
 
@@ -42,11 +46,30 @@
 
 //ボスの定位置
 #define BOSS_POS_X (FMX/2)
-#define BOSS_POS_Y 120.0
+#define BOSS_POS_Y (FMY/4)
+
 //ボスが持つ弾の最大数
 #define BOSS_BULLET_MAX 3000
 //弾幕最大数
 #define DANMAKU_MAX 50
+
+//レーザー
+#define LAZER_MAX 100
+//
+#define CHILD_MAX 20
+
+//ステージ数
+#define STAGE_NUM 5
+
+//アイテムの表示最大数
+#define ITEM_MAX 100
+//アイテムゲットボーダーライン
+#define ITEM_GET_BORDER_LINE 100
+//アイテムの吸収範囲
+#define ITEM_INDRAW_RANGE 70
+
+//アイテムの当たり判定
+#define ITEM_HIT_BOX 20
 
 #include "struct.h"
 

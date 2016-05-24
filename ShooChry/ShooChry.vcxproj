@@ -154,11 +154,15 @@
   <ItemGroup>
     <ClCompile Include="boss_shot.cpp" />
     <ClCompile Include="boss_shotH.cpp" />
+    <ClCompile Include="calc.cpp" />
     <ClCompile Include="char.cpp" />
+    <ClCompile Include="check_time.cpp" />
     <ClCompile Include="cshot.cpp" />
+    <ClCompile Include="dn.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy_act_pattern.cpp" />
+    <ClCompile Include="fps.cpp" />
     <ClCompile Include="graph.cpp" />
     <ClCompile Include="graph_back.cpp" />
     <ClCompile Include="ini.cpp" />
@@ -167,6 +171,7 @@
     <ClCompile Include="key.cpp" />
     <ClCompile Include="music.cpp" />
     <ClCompile Include="out.cpp" />
+    <ClCompile Include="out_lazer.cpp" />
     <ClCompile Include="shot.cpp" />
     <ClCompile Include="shotH.cpp" />
   </ItemGroup>

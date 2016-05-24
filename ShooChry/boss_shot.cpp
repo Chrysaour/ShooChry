@@ -20,6 +20,13 @@ void input_phy_pos(double x, double y, int t) {//t=移動にかける時間
 	boss.phy.prey = boss.y;//初期y座標
 }
 
+//レーザーの物理的計算登録
+void input_lphy(lazer_t *laz, int time, double angle) {
+	laz->lphy.angle = angle;
+	laz->lphy.base_ang = laz->angle;
+	laz->lphy.time = time;
+}
+
 //今いる位置からdist離れた位置にtカウントで移動する
 int move_boss_pos(double x1, double y1, double x2, double y2, double dist, int t) {
 	int i = 0;
@@ -37,6 +44,14 @@ int move_boss_pos(double x1, double y1, double x2, double y2, double dist, int t
 	return -1;//1000回試してダメならエラー
 }
 
+int search_child() {//空き番号を返す
+	for (int i = 0;i<CHILD_MAX;i++) {
+		if (child[i].flag == 0)
+			return i;
+	}
+	return -1;
+}
+
 int search_boss_shot() {//空き番号を返す
 	for (int i = 0;i<BOSS_BULLET_MAX;i++) {
 		if (boss_shot.bullet[i].flag == 0)
@@ -44,17 +59,23 @@ int search_boss_shot() {//空き番号を返す
 	}
 	return -1;
 }
+int search_lazer() {//空き番号を返す
+	for (int i = 0;i<LAZER_MAX;i++) {
+		if (lazer[i].flag == 0)
+			return i;
+	}
+	return -1;
+}
 double bossatan2() {//自機と敵との成す角度
 	return atan2(ch.y - boss.y, ch.x - boss.x);
 }
-
 double bossatan3(int k, double x, double y) {//指定座標と弾との成す角度
 	return atan2(y - boss_shot.bullet[k].y, x - boss_shot.bullet[k].x);
 }
-
 //物理的計算をさせる登録をする(指定時間tで定位置に戻す)
 void input_phy(int t) {//t=移動にかける時間
-	double ymax_x, ymax_y;if (t == 0)t = 1;
+	double ymax_x, ymax_y;
+	if (t == 0)t = 1;
 	boss.phy.flag = 1;//登録オン
 	boss.phy.cnt = 0;//カウンタ初期化
 	boss.phy.set_t = t;//移動にかける時間をセット
@@ -112,8 +133,11 @@ void enter_boss(int num) {
 		memset(shot, 0, sizeof(shot_t)*SHOT_MAX);//弾幕を消す
 		boss.x = FMX / 2;//ボスの初期座標
 		boss.y = -30;
-		boss.knd = -1;//弾幕の種類
+		if (stage_count == boss.appear_count[0])//最初なら
+			boss.knd = -1;//弾幕の種類
 	}
+	boss.phy.flag = 1;
+	boss.phy.flag = 1;
 	boss.flag = 1;
 	boss.hagoromo = 0;//扇を広げるかどうかのフラグ
 	boss.endtime = 99 * 60;//残り時間
@@ -122,12 +146,12 @@ void enter_boss(int num) {
 	boss.graph_flag = 0;//描画フラグを戻す
 	boss.knd++;
 	boss.wtime = 0;//待機時間を初期化
-	memset(&boss_shot, 0, sizeof(boss_shot_t));//ボスの弾幕情報を初期化
+	memset(lazer, 0, sizeof(lazer_t)*LAZER_MAX);//レーザー情報を初期化
 	input_phy(60);//60カウントかけて物理的計算で定位置に戻す
 }
 //ボスの待機処理
 void waitandenter() {
-	int t = 140;
+	int t = 150;
 	boss.wtime++;
 	if (boss.wtime>t)//140カウント待機したら弾幕セット
 		enter_boss_shot();
@@ -140,8 +164,10 @@ void calc_boss() {
 
 //ボスの弾幕メイン
 void boss_shot_main() {
-	if (stage_count == boss.appear_count[0] && boss.flag == 0)//開始時間なら
+	if ((stage_count == boss.appear_count[0] || stage_count == boss.appear_count[1])
+		&& boss.flag == 0) {//開始時間なら
 		enter_boss(0);//開始
+	}
 	if (boss.flag == 0)//ボスが登録されて無ければ戻る
 		return;
 	calc_boss();
@@ -150,7 +176,18 @@ void boss_shot_main() {
 	if (boss.state == 2 && (boss.hp <= 0 || boss.endtime <= 0)) {//弾幕中で体力が無くなったら
 		se_flag[1] = 1;//敵のピチュリ音
 		se_flag[11] = 1;
-		enter_boss(1);//次の弾幕を登録
+		input_phy(30);//30カウントで定位置に戻す
+		memset(&boss_shot, 0, sizeof(boss_shot_t));//ボスの弾幕情報を初期化
+		memset(&lazer, 0, sizeof(lazer_t)*LAZER_MAX);//ボスのレーザー情報を初期化
+		flash.flag = 0;//フラッシュを消す
+		if (boss.knd == boss.danmaku_num[0] || boss.knd == boss.danmaku_num[1]) {//出すべき弾幕をだしきったら
+			boss.flag = 0;//消す
+			enter_dn(10, 40);//(45)
+			se_flag[9] = 1;//ボスが死んだ音
+			return;
+		}
+		else
+			enter_boss(1);//次の弾幕を登録
 	}
 	if (boss.state == 1) {//弾幕間の待機時間
 		waitandenter();

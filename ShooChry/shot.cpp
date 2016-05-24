@@ -20,6 +20,16 @@ double shotatan2(int n) {
 	return atan2(ch.y - enemy[shot[n].num].y, ch.x - enemy[shot[n].num].x);
 }
 
+//À•W‰ñ“]
+//(x0,y0)‚©‚ç(mx,my)‚ğŠî€‚ÉangŠp‰ñ“]‚µ‚½Šp“x‚ğ(x,y)‚É‚¢‚ê‚é
+void conv_pos0(double *x, double *y, double x0, double y0, double mx, double my, double ang) {
+	double ox = x0 - mx, oy = y0 - my;
+	*x = ox*cos(ang) + oy*sin(ang);
+	*y = -ox*sin(ang) + oy*cos(ang);
+	*x += mx;
+	*y += my;
+}
+
 //‹ó‚¢‚Ä‚¢‚é’e‚ğ’T‚·
 int shot_search(int n) {
 	int i;
@@ -51,9 +61,52 @@ void shot_calc(int n) {
 	for (i = 0;i<SHOT_BULLET_MAX;i++)
 		if (shot[n].bullet[i].flag>0)
 			return;
+	//Œ»İ•\¦’†‚Ì’e‚ªˆê‚Â‚à‚È‚¯‚ê‚Î
 	if (enemy[shot[n].num].flag != 1) {
 		shot[n].flag = 0;//I—¹
 		enemy[shot[n].num].flag = 0;
+	}
+}
+
+void lazer_calc() {
+	int i;
+	for (i = 0;i<LAZER_MAX;i++) {
+		if (lazer[i].flag>0) {
+			//•\¦ˆÊ’u‚ğİ’è
+			lazer[i].disppt[0].x = lazer[i].startpt.x + cos(lazer[i].angle + PI / 2)*lazer[i].haba;
+			lazer[i].disppt[0].y = lazer[i].startpt.y + sin(lazer[i].angle + PI / 2)*lazer[i].haba;
+			lazer[i].disppt[1].x = lazer[i].startpt.x + cos(lazer[i].angle - PI / 2)*lazer[i].haba;
+			lazer[i].disppt[1].y = lazer[i].startpt.y + sin(lazer[i].angle - PI / 2)*lazer[i].haba;
+			lazer[i].disppt[2].x = lazer[i].startpt.x + cos(lazer[i].angle - PI / 2)*lazer[i].haba + cos(lazer[i].angle)*lazer[i].length;
+			lazer[i].disppt[2].y = lazer[i].startpt.y + sin(lazer[i].angle - PI / 2)*lazer[i].haba + sin(lazer[i].angle)*lazer[i].length;
+			lazer[i].disppt[3].x = lazer[i].startpt.x + cos(lazer[i].angle + PI / 2)*lazer[i].haba + cos(lazer[i].angle)*lazer[i].length;
+			lazer[i].disppt[3].y = lazer[i].startpt.y + sin(lazer[i].angle + PI / 2)*lazer[i].haba + sin(lazer[i].angle)*lazer[i].length;
+			//‚ ‚½‚è”ÍˆÍ‚ğİ’è
+			lazer[i].outpt[0].x = lazer[i].startpt.x + cos(lazer[i].angle + PI / 2)*(lazer[i].haba*lazer[i].hantei) + cos(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+			lazer[i].outpt[0].y = lazer[i].startpt.y + sin(lazer[i].angle + PI / 2)*(lazer[i].haba*lazer[i].hantei) + sin(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+			lazer[i].outpt[1].x = lazer[i].startpt.x + cos(lazer[i].angle - PI / 2)*(lazer[i].haba*lazer[i].hantei) + cos(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+			lazer[i].outpt[1].y = lazer[i].startpt.y + sin(lazer[i].angle - PI / 2)*(lazer[i].haba*lazer[i].hantei) + sin(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+			lazer[i].outpt[2].x = lazer[i].startpt.x + cos(lazer[i].angle - PI / 2)*(lazer[i].haba*lazer[i].hantei) + cos(lazer[i].angle)*lazer[i].length*lazer[i].hantei + cos(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+			lazer[i].outpt[2].y = lazer[i].startpt.y + sin(lazer[i].angle - PI / 2)*(lazer[i].haba*lazer[i].hantei) + sin(lazer[i].angle)*lazer[i].length*lazer[i].hantei + sin(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+			lazer[i].outpt[3].x = lazer[i].startpt.x + cos(lazer[i].angle + PI / 2)*(lazer[i].haba*lazer[i].hantei) + cos(lazer[i].angle)*lazer[i].length*lazer[i].hantei + cos(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+			lazer[i].outpt[3].y = lazer[i].startpt.y + sin(lazer[i].angle + PI / 2)*(lazer[i].haba*lazer[i].hantei) + sin(lazer[i].angle)*lazer[i].length*lazer[i].hantei + sin(lazer[i].angle)*lazer[i].length*((1 - lazer[i].hantei) / 2);
+
+			double ymax = lazer[i].lphy.angle, ty = lazer[i].lphy.time, t = lazer[i].cnt;
+			double delt = (2 * ymax*t / ty - ymax*t*t / (ty*ty));
+			if (lazer[i].lphy.time != 0)//‰ñ“]ˆÚ“®ŠÔ“à‚È‚ç
+				lazer[i].angle = lazer[i].lphy.base_ang + delt;//‰ñ“]‚·‚é
+			if (lazer[i].lphy.conv_flag == 1) {//À•W•ÏŠ·‚ğ‚·‚é‚©
+				conv_pos0(&lazer[i].startpt.x, &lazer[i].startpt.y,
+					lazer[i].lphy.conv_x, lazer[i].lphy.conv_y,
+					lazer[i].lphy.conv_base_x, lazer[i].lphy.conv_base_y,
+					-delt);
+			}
+			if (lazer[i].cnt>lazer[i].lphy.time) {//‰ñ“]ŠÔ‚ğ‰ß‚¬‚é‚Æ‚â‚ß‚é
+				lazer[i].lphy.time = 0;
+				lazer[i].lphy.conv_flag = 0;
+			}
+			lazer[i].cnt++;
+		}
 	}
 }
 
@@ -67,4 +120,5 @@ void shot_main() {
 			shot[i].cnt++;
 		}
 	}
+	lazer_calc();
 }
